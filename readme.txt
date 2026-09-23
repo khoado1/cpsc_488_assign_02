@@ -1,5 +1,14 @@
 
 
+# build image, jackdo/cpsc488-higgs:1.0 personal repository
+docker buildx build --platform linux/amd64 --load -t jackdo/cpsc488-higgs:1.0 .
+
+#test locally
+docker run --rm jackdo/cpsc488-higgs:1.0
+
+docker push jackdo/cpsc488-higgs:1.0
+kubectl apply -f deployment.yaml
+
 
 python3 -m venv .venv
 
