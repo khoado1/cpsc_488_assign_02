@@ -9,6 +9,46 @@ docker run --rm jackdo/cpsc488-higgs:1.0
 docker push jackdo/cpsc488-higgs:1.0
 kubectl apply -f deployment.yaml
 
+brew install kubectl
+brew install int128/kubelogin/kubelogin
+
+kubectl version --client
+kubectl oidc-login --help
+
+#setup oidc_login 
+mkdir -p ~/.kube
+curl -fL https://nrp.ai/config -o ~/.kube/config
+kubectl config get-contexts
+
+#trigger login to nrp.ai
+kubectl get nodes
+
+#check namespace access: csuf-ecs-ryu
+kubectl get pods -n csuf-ecs-ryu
+kubectl auth can-i create jobs -n csuf-ecs-ryu
+
+#deploy and run yaml
+docker push jackdo/cpsc488-higgs:1.0
+kubectl apply -f deployment.yaml
+kubectl get jobs -n csuf-ecs-ryu
+kubectl get pods -n csuf-ecs-ryu
+
+#refresh and try again
+kubectl oidc-login clean
+cd /Users/albundy/dev/cpsc_488_assign_02
+kubectl apply -f deployment.yaml
+
+#new namespace: csuf-llm
+kubectl get pods -n csuf-llm
+kubectl auth can-i create jobs -n csuf-llm
+
+kubectl apply -f deployment.yaml
+kubectl get jobs -n csuf-llm
+kubectl get pods -n csuf-llm
+
+#collect logs
+
+
 
 python3 -m venv .venv
 
