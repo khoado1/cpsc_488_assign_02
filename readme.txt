@@ -1,4 +1,6 @@
 
+#clone repository
+git clone https://github.com/khoado1/cpsc_488_assign_02.git
 
 # build image, jackdo/cpsc488-higgs:1.0 personal repository
 docker buildx build --platform linux/amd64 --load -t jackdo/cpsc488-higgs:1.0 .
