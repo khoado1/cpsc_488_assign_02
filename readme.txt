@@ -49,6 +49,10 @@ kubectl get jobs -n csuf-llm
 kubectl get pods -n csuf-llm
 
 #collect logs
+kubectl logs job/cpsc488-gpu-verification -n csuf-llm
+
+#run the higgs code
+docker run --rm --entrypoint python jackdo/cpsc488-higgs:1.0 higgs_pipeline.py --device cpu
 
 
 
@@ -89,33 +93,10 @@ git remote -v
 git add .
 git commit -m "Your commit message here"
 git push -u origin main
-
-python -m pip install python-dotenv openai
-
-#run program
-python verify_nautilus_llm_connection.py
-
-OLD OLD OLD:
-#setup python environment
-brew install pyenv
-
-#Step 2: Configure your shell
-#check .zshrc first
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+clear; git add . ; git commit -m "message"; git push -u origin main
 
 
-#Apply the changes to your current terminal session: [1] (https://www.youtube.com/watch?v=u62MifBPI5g)
-source ~/.zshrc
+pip install --upgrade pip
+pip install --no-cache-dir -r requirements.txt
 
-#Step 3: Install the older Python version
-#list first
-pyenv install -l
-
-#install target version
-pyenv install 3.11.16
-
-#Step 4: Create the isolated environment (venv)
-cd /path/to/your/project
-pyenv local 3.11.16
+docker run --rm --entrypoint python jackdo/cpsc488-higgs:1.0 higgs_pipeline.py --device cpu
