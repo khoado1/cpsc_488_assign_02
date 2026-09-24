@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY container_nautilus_gpu_test.py .
 
+COPY higgs_pipeline.py .
+
 # Default behavior: Task 1 GPU verification program runs automatically.
 # For Task 2, the Kubernetes Job will override this default command
 # while using this exact same image.

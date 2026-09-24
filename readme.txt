@@ -100,3 +100,11 @@ pip install --upgrade pip
 pip install --no-cache-dir -r requirements.txt
 
 docker run --rm --entrypoint python jackdo/cpsc488-higgs:1.0 higgs_pipeline.py --device cpu
+
+
+#find repository
+https://hub.docker.com
+
+#build and push docker image
+docker buildx build --platform linux/amd64 --load -t jackdo/cpsc488-higgs:1.0 .
+docker push jackdo/cpsc488-higgs:1.0
