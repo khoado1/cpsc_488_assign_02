@@ -157,3 +157,11 @@ git log --oneline --decorate -5
 git push --force-with-lease origin main
 
 #on other laptops, run this
+git push --force-with-lease origin 97a2440:main
+git ls-remote origin refs/heads/main
+git fetch --prune origin
+git reset --hard origin/main
+git log --oneline --decorate -3
+git diff --summary
+git config core.fileMode false
+git status
