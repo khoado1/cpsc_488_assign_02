@@ -143,3 +143,17 @@ kubectl logs -f job/cpsc488-higgs-gpu -n csuf-llm -c higgs-pipeline
 kubectl exec -n csuf-llm cpsc488-higgs-gpu-bmhlp -c download-higgs -- ls -lh /data
 
 #additional items
+
+#so local knows latest from remote
+git fetch origin
+
+#reset to needed commit
+git reset --hard 97a2440
+
+#check the history (local)
+git log --oneline --decorate -5
+
+#push local back to remote
+git push --force-with-lease origin main
+
+#on other laptops, run this
