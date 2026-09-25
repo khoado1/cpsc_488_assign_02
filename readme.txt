@@ -108,3 +108,38 @@ https://hub.docker.com
 #build and push docker image
 docker buildx build --platform linux/amd64 --load -t jackdo/cpsc488-higgs:1.0 .
 docker push jackdo/cpsc488-higgs:1.0
+
+#checking storage
+kubectl get pvc -n csuf-llm
+kubectl auth can-i create persistentvolumeclaims -n csuf-llm
+kubectl get storageclass
+
+#allocate storage on Nautilus
+kubectl apply -f higgs-data-pvc.yaml
+kubectl get pvc jackdo-higgs-data -n csuf-llm
+
+#troubleshoot
+kubectl describe pvc jackdo-higgs-data -n csuf-llm
+
+#ceate new version of repository; push to hub
+docker tag jackdo/cpsc488-higgs:1.0 jackdo/cpsc488-higgs:1.1
+docker push jackdo/cpsc488-higgs:1.1
+
+git add Dockerfile higgs_pipeline.py higgs-data-pvc.yaml
+git commit -m "Add HIGGS training pipeline and storage claim"
+git push
+
+#delete storage
+kubectl delete pvc jackdo-higgs-data -n csuf-llm
+
+
+#do gpu job
+kubectl apply -f higgs-gpu-job.yaml
+kubectl get pods -n csuf-llm -w
+
+#benchmark progress
+kubectl logs -f job/cpsc488-higgs-gpu -n csuf-llm -c higgs-pipeline
+
+kubectl exec -n csuf-llm cpsc488-higgs-gpu-bmhlp -c download-higgs -- ls -lh /data
+
+#additional items

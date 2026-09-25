@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cpsc488-higgs-gpu
+  namespace: csuf-llm
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+
+      volumes:
+        - name: higgs-data
+          emptyDir:
+            sizeLimit: 5Gi
+
+      initContainers:
+        - name: download-higgs
+          image: jackdo/cpsc488-higgs:1.1
+          imagePullPolicy: Always
+          command: ["python", "-c"]
+          args:
+            - |
+              from pathlib import Path
+              from urllib.request import urlretrieve
+
+              url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00280/HIGGS.csv.gz"
+              destination = Path("/data/HIGGS.csv.gz")
+
+              print(f"Downloading {url}")
+              urlretrieve(url, destination)
+              print(f"Downloaded {destination} ({destination.stat().st_size} bytes)")
+          volumeMounts:
+            - name: higgs-data
+              mountPath: /data
+
+      containers:
+        - name: higgs-pipeline
+          image: jackdo/cpsc488-higgs:1.1
+          imagePullPolicy: Always
+          command: ["python"]
+          args:
+            - higgs_pipeline.py
+            - --device
+            - cuda
+            - --data-path
+            - /data/HIGGS.csv.gz
+            - --batch-size
+            - "8192"
+            - --epochs
+            - "5"
+            - --learning-rate
+            - "0.001"
+          resources:
+            requests:
+              cpu: "4"
+              memory: "16Gi"
+              ephemeral-storage: "5Gi"
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "4"
+              memory: "16Gi"
+              ephemeral-storage: "5Gi"
+              nvidia.com/gpu: "1"
+          volumeMounts:
+            - name: higgs-data
+              mountPath: /data
