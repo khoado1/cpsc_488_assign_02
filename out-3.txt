@@ -1,0 +1,20 @@
+Device: cpu
+Loading data from: /data/HIGGS.csv.gz
+Data loading time: 86.67 seconds
+Training examples: 10,000,000
+Testing examples: 1,000,000
+Required MLP: 28 -> 300 -> 300 -> 100 -> 1
+Trainable parameters: 129201
+Epoch 1/5 - training loss: 0.561544
+Epoch 2/5 - training loss: 0.511706
+Epoch 3/5 - training loss: 0.493455
+Epoch 4/5 - training loss: 0.484934
+Epoch 5/5 - training loss: 0.479610
+
+=== Benchmark Results ===
+Data loading seconds: 86.67
+Model initialization seconds: 4.93
+Training seconds: 886.06
+Evaluation seconds: 9.55
+Total pipeline seconds: 987.20
+Test accuracy: 76.55%

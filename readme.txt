@@ -142,6 +142,11 @@ kubectl logs -f job/cpsc488-higgs-gpu -n csuf-llm -c higgs-pipeline
 
 kubectl exec -n csuf-llm cpsc488-higgs-gpu-bmhlp -c download-higgs -- ls -lh /data
 
+
+#collect log from cpu job
+kubectl get job cpsc488-higgs-cpu -n csuf-llm
+kubectl logs job/cpsc488-higgs-cpu -n csuf-llm -c higgs-pipeline | tee out-3.txt
+
 #additional items
 
 #so local knows latest from remote
