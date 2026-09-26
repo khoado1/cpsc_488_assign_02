@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cpsc488-gpu-verification
+  namespace: csuf-llm
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: gpu-verification
+          image: jackdo/cpsc488-higgs:1.0
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "2"
+              memory: "8Gi"
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "2"
+              memory: "8Gi"
+              nvidia.com/gpu: "1"

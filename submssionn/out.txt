@@ -1,0 +1,21 @@
+
+Generating data...
+
+Data ready.
+
+=== DOT PRODUCT ===
+
+Native loop            0.394733 sec
+NumPy                  0.003940 sec
+PyTorch (cuda)         0.000213 sec
+
+=== MATRIX MULTIPLICATION ===
+
+Native loops           12.821125 sec
+NumPy                  0.006874 sec
+PyTorch (cuda)         0.000137 sec
+
+Device: cuda
+GPU: NVIDIA A10
+
+Done.

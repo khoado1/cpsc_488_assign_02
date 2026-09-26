@@ -1,0 +1,21 @@
+Device: cuda
+GPU: NVIDIA A10
+Loading data from: /data/HIGGS.csv.gz
+Data loading time: 88.49 seconds
+Training examples: 10,000,000
+Testing examples: 1,000,000
+Required MLP: 28 -> 300 -> 300 -> 100 -> 1
+Trainable parameters: 129201
+Epoch 1/5 - training loss: 0.561561
+Epoch 2/5 - training loss: 0.511975
+Epoch 3/5 - training loss: 0.494164
+Epoch 4/5 - training loss: 0.485471
+Epoch 5/5 - training loss: 0.480144
+
+=== Benchmark Results ===
+Data loading seconds: 88.49
+Model initialization seconds: 1.35
+Training seconds: 674.56
+Evaluation seconds: 10.36
+Total pipeline seconds: 774.77
+Test accuracy: 76.52%
